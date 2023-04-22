@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <%= image_tag @author.avatar.url(:medium) %>
+</p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @author.name %>
+</p>
+<p>
+  <strong>Apellido:</strong>
+  <%= @author.lastname %>
+</p>
+
+<p>
+  <strong>Actividad:</strong>
+  <%= @author.activity %>
+</p>
+
+<p>
+  <strong>Biografia:</strong>
+  <%= @author.biography %>
+</p>
+
+<%= link_to 'Edit', edit_author_path(@author) %> |
+<%= link_to 'Back', authors_path %>

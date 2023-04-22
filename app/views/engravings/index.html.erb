@@ -1,0 +1,40 @@
+<h1>Listing engravings</h1>
+<%= link_to 'New Engraving', new_engraving_path %>
+
+<div id="engraving">
+  <input class="search" placeholder="Buscar" />
+
+  <button class="sort" data-sort="nombre">
+    Ordenar por Nombre
+  </button>
+
+  <table  class="table table-bordered table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody class="list">
+    <% @engravings.each do |engraving| %>
+      <tr>
+        <td class="nombre"><%= engraving.name %></td>
+        <td><%= link_to 'Show', engraving %></td>
+        <td><%= link_to 'Edit', edit_engraving_path(engraving) %></td>
+        <td><%= link_to 'Destroy', engraving, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <br>
+  <%= will_paginate @engravings,  renderer: BootstrapPagination::Rails %>
+</div>
+
+<script>
+  var options = {
+      valueNames: ['nombre']
+  };
+
+  var userList = new List('engraving', options);
+</script>

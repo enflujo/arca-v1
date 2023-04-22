@@ -1,0 +1,29 @@
+<%= form_for(@datosbasico) do |f| %>
+  <% if @datosbasico.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@datosbasico.errors.count, "error") %> Prohibited this dato básico from being saved:</h2>
+
+      <ul>
+      <% @datosbasico.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <strong>Título:</strong><br>
+    <%= f.text_field :titulo %>
+  </div>
+  <div class="field">
+    <strong>Sección:</strong><br>
+    <%= f.text_field :seccion %>
+  </div>
+  <div class="field">
+    <strong>Descripción:</strong><br>
+    <%= f.text_area :descripcion, :size => "100x10"%>
+  </div>
+  <div class="actions">
+    <%= f.submit "Update dato básico" %>
+  </div>
+<% end %>

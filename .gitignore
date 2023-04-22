@@ -1,0 +1,33 @@
+#Git ignore modified
+.idea
+.idea/**/*
+*.rbc
+*.sassc
+.sass-cache
+capybara-*.html
+.rspec
+.rvmrc
+# /vendor/bundle
+/log/*
+tmp
+
+/coverage/
+/spec/tmp/*
+**.orig
+rerun.txt
+pickle-email-*.html
+.project
+.DS_Store
+node_modules
+
+/log/development.log
+db/schema.rb
+# config/database.yml
+# public/assets
+# /public/attachments
+/public/system/*
+/public/assets/imagenesGestos
+comprimidos
+postgres_datos
+/config/application.yml
+.env

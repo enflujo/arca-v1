@@ -1,0 +1,32 @@
+<%= render 'application/services' %>
+
+<%= render 'application/tools' %>
+
+<%= render 'application/about'%>
+
+<%= render 'application/bibliography'%>
+
+<%= render 'application/team'%>
+
+<%= render 'application/contact'%>
+
+<%= render 'application/citation'%>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<% content_for :js_application do %>
+    <%= javascript_include_tag "welcome" %>
+<% end %>
+
+ <% content_for :css_application do %>
+     <%= stylesheet_link_tag "welcome" %>
+ <% end %>

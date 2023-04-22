@@ -1,0 +1,18 @@
+<div id="user_nav">
+  <% if user_signed_in? %>
+      <% if current_user.admin? %>
+          <%= link_to "Crear usuario", new_users_admin_path %>
+          <br>
+          <br>
+      <% end %>
+      Signed in as <%= current_user.email %>
+      <%= link_to "Administración", application_admin_path %>
+      <br>
+      <%= link_to "Salir", destroy_user_session_path ,:method => :delete %>
+      <br>
+
+  <% else %>
+      <br>
+      <%= link_to "Entrar", new_user_session_path %>
+  <% end %>
+</div>

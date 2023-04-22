@@ -1,0 +1,43 @@
+
+<br>
+<br>
+<br>
+<div id="timeline"></div>
+<%  if (json_artworks_timeline_total @artworks) >1 %>
+    <script type="text/javascript">
+        var currentTimeline = TimelineSetter.Timeline.boot(
+                <%= json_artworks_timeline @artworks %> ,{"interval":"","container":"#timeline"}
+        );
+    </script>
+    <noscript>
+      <table>
+        <thead>
+        <tr>
+          <th>date</th>
+          <th>series</th>
+          <th>description</th>
+          <th>link</th>
+          <th>html</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @artworks.each  do |objeto| %>
+            <% if objeto.creation_date %>
+                <tr>
+                  <td><%=objeto.creation_date %></td>
+                  <td></td>
+                  <td><%=objeto.biographic_comment %></td>
+                  <td><%=url_for(objeto) %></td>
+                  <td><%=objeto.title %></td>
+                </tr>
+            <% end %>
+        <% end %>
+
+
+        </tbody>
+      </table>
+    </noscript>
+<% else %>
+    <h6>Tiene que existir dos obras o mas para poder visualizar la linea de tiempo.</h6>
+    <%= link_to "Ver otras linea de tiempo", artworks_path+"?time_line=true", class: "page-scroll" %>
+<% end %>

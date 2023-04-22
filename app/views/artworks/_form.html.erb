@@ -1,0 +1,462 @@
+<%= bootstrap_form_for(@artwork, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-10") do |f| %>
+    <% if @artwork.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@artwork.errors.count, "error") %> prohibited this artwork from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @artwork.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-sm-3">
+      <a type="href" data-toggle="modal" data-target="#imageModal" href="">
+        <%= image_tag(@artwork.avatar.url(:large), :class => "img-thumbnail", :class => "img-responsive", :style => "margin-left: auto; margin-right: auto;") %>
+      </a>
+    </div>
+  <div class="col-sm-9">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#datos_generales" data-toggle="tab" aria-expanded="false">Datos generales</a></li>
+    <li class=""><a href="#desc_img_rel" data-toggle="tab" aria-expanded="false">Descripción, Imagenes y relatos</a></li>
+    <li class=""><a href="#personajes" data-toggle="tab" aria-expanded="false">Personajes</a></li>
+    <li class=""><a href="#cuerpo_gestos" data-toggle="tab" aria-expanded="false">Cuerpo y gestos</a></li>
+    <li class=""><a id="mapTab" href="#location" data-toggle="tab" aria-expanded="false">Lugar</a></li>
+  </ul>
+  <br>
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active in" id="datos_generales">
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.file_field :avatar, label: "Imagen",class:"category"%>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.text_field :title, label: "Titulo" %>
+          <%= f.collection_select :author_id, Author.all.order("lastname, name"), :id, :get_full_name,  {:prompt => 'Seleccione el author'} %>
+          <%= f.collection_select :type_id, Type.order(:name), :id, :name,  {:prompt => 'Seleccione el tipo'} %>
+          <%= f.collection_select :source_id, Source.order(:name), :id, :name,  {:prompt => 'Seleccione la fuente'} %>
+          <div class="form-group">
+            <%= f.label :signed, class: "control-label col-sm-2"%>
+            <div class="col-md-10">
+              <%= f.check_box_without_bootstrap :signed%>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= f.select(:category_1_id, @categories_for_select_1, prompt: 'Select Category', :class => 'form-control', :include_blank => true) %>
+          <%= f.select(:category_2_id, @categories_for_select_2, prompt: 'Select Category', :class => 'form-control', :include_blank => true) %>
+          <%= f.select(:category_3_id, @categories_for_select_3, prompt: 'Select Category', :class => 'form-control', :include_blank => true) %>
+          <%= f.select(:category_4_id, @categories_for_select_4, prompt: 'Select Category', :class => 'form-control', :include_blank => true) %>
+          <%= f.select(:category_5_id, @categories_for_select_5, prompt: 'Select Category', :class => 'form-control', :include_blank => true) %>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.collection_select :origin_country_id, Country.order("name_spanish"), :id, :name_spanish,  {:prompt => 'País de origen'} %>
+          <%= f.collection_select :origin_city_id, City.order(:name), :id, :name,  {:prompt => 'Ciudad de origen'} %>
+          <%= f.collection_select :actual_country_id, Country.order("name_spanish"), :id, :name_spanish,  {:prompt => 'País actual'} %>
+          <%= f.collection_select :actual_city_id, City.order(:name), :id, :name,  {:prompt => 'Ciudad actual'} %>
+          <%= f.text_area :annotation, label:"Anotación", :size => "30x5" %>
+        </div>
+        <div class="col-md-6">
+          <%= f.collection_select :school_id, School.order(:name), :id, :name,  {:prompt => 'Seleccione la escuela'} %>
+          <%= f.collection_select :place_id, Place.order(:name), :id, :name,  {:prompt => 'Seleccione el lugar'} %>
+          <%= f.text_field :annotation_date %>
+          <%= f.date_field :creation_date %>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.text_area :synthesis, :class => 'form-control' , :size => "30x5" %>
+        </div>
+        <div class="col-md-6">
+          <%= f.text_area :biographic_comment, label: "Comentario bibliográfico" , :class => 'form-control', :size => "30x5" %>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <!--<label class="control-label col-sm-3">Descriptores</label>-->
+        <br>
+        <div class="col-md-6">
+          <%= f.fields_for :descriptions, @artwork.descriptions.build  do |fdesc| %>
+              <%= render 'descriptors_fields', ff:fdesc %>
+          <% end %>
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#descModal">Modificar descriptores</button>
+        </div>
+        <div class="col-md-6">
+          <%= f.fields_for :engravings, @artwork.engravings.build  do |fart| %>
+              <fieldset>
+                <%= fart.text_area  :name, label: "Características particulares" , :size => "30x5"%>
+                <%= fart.hidden_field :_destroy %>
+              </fieldset>
+          <% end %>
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#engravingsModal">Modificar características particulares</button>
+        </div>
+      </div>
+      <br>
+    </div>
+
+    <div class="tab-pane fade in" id="desc_img_rel">
+      <div class="row">
+        <div class="col-md-6">
+        <%= f.collection_select :scene_id, Scene.order(:name), :id, :name,  {:prompt => 'Seleccione la escena'} %>
+        <%= f.collection_select :story_type_id, StoryType.order(:name), :id, :name,  {:prompt => 'Seleccione el tipo de historia'} %>
+        <%= f.collection_select :donor_id, Donor.order(:name), :id, :name,  {:prompt => 'Seleccione el donante'} %>
+        <%= f.collection_select :phylactery_billboard_id, PhylacteryBillboard.order(:name), :id, :name,  {:prompt => 'Cartelera Filacteria'} %>
+        <%= f.collection_select :iconographic_attribute_id, IconographicAttribute.order(:name), :id, :name,  {:prompt => 'Atributo Iconografico'}, label:"Atributo Iconografico" %>
+        </div>
+        <div class="col-md-6">
+          <%= f.text_area :comment, :class => 'form-control' , :size => "30x5" %>
+        </div>
+
+        <br>
+        <div class="row">
+          <div class="col-md-6">
+            <%= f.fields_for :artwork_symbols, @artwork.artwork_symbols.build  do |fart| %>
+                <%= render 'artwork_symbols_fields', ff:fart %>
+            <% end %>
+
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#symbModal">Modificar simbolos</button>
+
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+
+    <div class="tab-pane fade in" id="personajes">
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.collection_select :passage_id, Passage.all.order("name"), :id, :name,  {:prompt => 'Seleccione el pasaje'} %>
+          <br>
+          <table class="table table-condensed table-hover table-striped">
+            <tbody>
+              <% @artwork.characters.each  do |sym| %>
+                  <tr><td><%= sym.name %></td></tr>
+              <% end %>
+            </tbody>
+           </table>
+          <br>
+
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#perModal">Modificar Personajes</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade in" id="cuerpo_gestos">
+      <div class="row">
+        <br>
+        <div class="col-md-6">
+          <%= f.fields_for :body_gestures, @artwork.body_gestures.build  do |fdesc| %>
+              <%= render 'body_gestures_fields', ff:fdesc %>
+          <% end %>
+          <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#gestosModal">Modificar gestos</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade in" id="location">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-sm-2">
+              <label style="text-align: right">Lugar de origen</label>
+            </div>
+            <div class="col-sm-10">
+              <div id="mapOrigin" class="well"></div>
+            </div>
+          </div>
+          <%= f.text_field :latitude_origin %>
+          <%= f.text_field :longitude_origin %>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-sm-2">
+              <label style="text-align: right">Lugar actual</label>
+            </div>
+            <div class="col-sm-10">
+              <div id="mapCurrent" class="well"></div>
+            </div>
+          </div>
+          <%= f.text_field :latitude_current %>
+          <%= f.text_field :longitude_current %>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+    <div style="float: right">
+      <%= f.submit :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),artworks_path(:parent_id =>params[:parent_id]) , :class => 'btn btn-default' %>
+    </div>
+
+    <!-- Modal for descriptores view -->
+    <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            Descripciones de la obra<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-content">
+              <div class="col-xs-12 col-sm-12 col-md-12" >
+                <div class="row" style="padding: 5px">
+                    <% for description in Description.order("description ASC") %>
+                        <div class="col-xs-2 col-sm-2 col-md-2" style="height: 40px; border-style: solid; border-width: 1px">
+                          <%= check_box_tag "artwork[description_ids][]", description.id, @artwork.descriptions.include?(description) %>
+                          <%= description.description %>
+                        </div>
+                    <% end %>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal for gestos view -->
+    <div class="modal fade" id="gestosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            Gestos en la obra<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-content">
+              <div class="col-xs-12 col-sm-12 col-md-12" >
+                <div class="row" style="padding: 5px">
+                    <% for gesto in BodyGesture.order("name ASC") %>
+                        <div class="col-xs-2 col-sm-2 col-md-2" style="height: 270px;
+                            width: 220px;
+                            border-style: solid;
+                            border-width: 1px;
+                            position: static;
+                            padding: 5px;
+                            text-align: center;">
+                          <div>
+                          <%= image_tag gesto.image.url(:small) %>
+                          </div>
+                          <%= check_box_tag "artwork[body_gesture_ids][]", gesto.id, @artwork.body_gestures.include?(gesto) %>
+                          <%= gesto.name %>
+                        </div>
+                    <% end %>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal for Symbols view -->
+    <div class="modal fade" id="symbModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            Símbolos de la obra<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-content">
+            <div class="col-xs-12 col-sm-12 col-md-12" >
+              <div class="row" style="padding: 5px">
+                <% for description in ArtworkSymbol.all.order("name ASC") %>
+                    <div class="col-xs-2 col-sm-2 col-md-2" style="height: 40px; border-style: solid; border-width: 1px">
+                      <%= check_box_tag "artwork[artwork_symbol_ids][]", description.id, @artwork.artwork_symbols.include?(description) %>
+                      <%=	 description.name %>
+                    </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Engravings view -->
+    <div class="modal fade" id="engravingsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            Características particulares de la obra<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <% for e in Engraving.all.order("name ASC") %>
+                <%= check_box_tag "artwork[engraving_ids][]", e.id,@artwork.engravings.include?(e) %>
+                <%=  e.name %>
+                <br>
+            <% end %>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Personajes view -->
+    <div class="modal fade" id="perModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            Personajes de la obra<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-content">
+            <div class="col-xs-12 col-sm-12 col-md-12" >
+              <div class="row" style="padding: 5px">
+                <% for personaje in Character.all.order("name asc") %>
+                  <div class="col-xs-2 col-sm-2 col-md-2" style="height: 60px; width: 177px; border-style: solid; border-width: 1px">
+                    <%= check_box_tag "artwork[character_ids][]", personaje.id,@artwork.characters.include?(personaje) %>
+                    <%=	 personaje.name %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Modal for image view -->
+  <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <% if @artwork.save %>
+            <h4 class="modal-title" id="myModalLabel"><%= "#{@artwork.title} - #{@artwork.author.name} "%></h4>
+          <% end %>
+      </div>
+        <div class="modal-body">
+          <%= image_tag @artwork.avatar.url, :id => "zoomableImage", :class => "img-thumbnail", :class => "img-responsive", 'data-zoom-image' => @artwork.avatar.url, :style => "margin-left: auto; margin-right: auto;" %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBoEhbVuRFeYrHenYHgnCLyBEXeaHxolOU&sensor=false">
+    </script>
+    <style>
+      .zoomContainer{ z-index: 9999;}
+      .zoomWindow{ z-index: 9999;}
+    </style>
+    <script>
+      //Zoomable Image with ElevateZoom
+      $("#zoomableImage").elevateZoom({ zoomType  : "inner", cursor: "crosshair" });
+
+      $('#imageModal').on('shown.bs.modal', function() {
+        $("#zoomableImage").elevateZoom({
+            zoomType  : "lens",
+            lensShape : "round",
+            lensSize : 200,
+            scrollZoom : true,
+            containLensZoom : true,
+        });
+      });
+
+      jQuery('#imageModal').on('hidden.bs.modal', function (e) {
+        jQuery.removeData(jQuery('#zoomableImage'), 'elevateZoom');//remove zoom instance from image
+        jQuery('.zoomContainer').remove();// remove zoom container from DOM
+      });
+
+        //Google maps
+        function initialize() {
+            infowindow = new google.maps.InfoWindow();
+            var latlngOrigin = new google.maps.LatLng(<%= @artwork.latitude_origin %>,<%= @artwork.longitude_origin %>);
+            var latlngCurrent = new google.maps.LatLng(<%= @artwork.latitude_current %>,<%= @artwork.longitude_current %>);
+
+            var originProp = {
+                disableDefaultUI: true,
+                zoomControl: true,
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.DEFAULT,
+                    position: google.maps.ControlPosition.RIGHT_TOP
+                },
+                center: latlngOrigin,
+                zoom: 5,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var currentProp = {
+                disableDefaultUI: true,
+                zoomControl: true,
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.DEFAULT,
+                    position: google.maps.ControlPosition.RIGHT_TOP
+                },
+                center: latlngCurrent,
+                zoom: 5,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var mapOrigin = new google.maps.Map(document.getElementById("mapOrigin"), originProp);
+            $("#mapTab").on('shown.bs.tab', function() {
+
+                /* Trigger map resize event */
+                google.maps.event.trigger(mapOrigin, 'resize');
+                mapOrigin.setCenter(latlngOrigin);
+            });
+            var mapCurrent = new google.maps.Map(document.getElementById("mapCurrent"), currentProp);
+            $("#mapTab").on('shown.bs.tab', function() {
+
+                /* Trigger map resize event */
+                google.maps.event.trigger(mapCurrent, 'resize');
+                mapCurrent.setCenter(latlngCurrent);
+            });
+
+            $("#mapOrigin").css("width", '100%').css("height", 400);
+            var markerOrigin = new google.maps.Marker({
+                position: latlngOrigin,
+                map: mapOrigin,
+                draggable:true,
+                icon: pinSymbol("#A12E33"),
+                title: 'Ubicación de origen'
+            });
+            $("#mapCurrent").css("width", '100%').css("height", 400);
+            var markerCurrent = new google.maps.Marker({
+                position: latlngCurrent,
+                map: mapCurrent,
+                draggable:true,
+                icon: pinSymbol("#F15E00"),
+                title: 'Ubicación actual'
+            });
+
+            google.maps.event.addListener(markerOrigin, 'dragend', function(evt){
+                $('#artwork_latitude_origin').val(evt.latLng.lat());
+                $('#artwork_longitude_origin').val(evt.latLng.lng());
+            });
+            google.maps.event.addListener(markerCurrent, 'dragend', function(evt){
+                $('#artwork_latitude_current').val(evt.latLng.lat());
+                $('#artwork_longitude_current').val(evt.latLng.lng());
+            });
+
+            function pinSymbol(color) {
+                return {
+                        path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z',
+                        fillColor: color,
+                        fillOpacity: 1,
+                        strokeColor: '#000',
+                        strokeWeight: 2,
+                        scale: 1
+                        };
+            }
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+<% end %>

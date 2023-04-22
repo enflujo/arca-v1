@@ -1,0 +1,12 @@
+<div class="control-group">
+  <%= f.label :city, :class => 'control-label' %> <small><%= link_to "Crear origen", new_city_url%></small>
+  <div class="controls">
+    <%= f.collection_select :city_id, City.all, :id, :name,  {:prompt => 'Seleccione el origen'} %>
+    <% if params[:action] == "edit" %>
+        <br>
+        <%= check_box_tag  "delete_city", true %>
+        <%= f.label :_destroy , "Eliminar ciudad"%>
+    <% end %>
+  </div>
+  <%= error_span(@artwork[:comment]) %>
+</div>

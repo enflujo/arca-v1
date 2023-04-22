@@ -1,0 +1,40 @@
+<h1>Listing story_types</h1>
+<%= link_to 'New Story type', new_story_type_path %>
+
+<div id="story">
+  <input class="search" placeholder="Buscar" />
+
+  <button class="sort" data-sort="nombre">
+    Ordenar por Nombre
+  </button>
+
+  <table  class="table table-bordered table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody class="list">
+    <% @story_types.each do |story_type| %>
+      <tr>
+        <td class="nombre"><%= story_type.name %></td>
+        <td><%= link_to 'Show', story_type %></td>
+        <td><%= link_to 'Edit', edit_story_type_path(story_type) %></td>
+        <td><%= link_to 'Destroy', story_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+  <br>
+  <%= will_paginate @story_types,  renderer: BootstrapPagination::Rails %>
+</div>
+
+<script>
+    var options = {
+        valueNames: ['nombre']
+    };
+
+    var userList = new List('story', options);
+</script>

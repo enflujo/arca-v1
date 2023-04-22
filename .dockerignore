@@ -1,0 +1,7 @@
+public/system
+_backup_datos
+node_modules
+procesarImgs.js
+postgres_datos
+.DS_Store
+.git

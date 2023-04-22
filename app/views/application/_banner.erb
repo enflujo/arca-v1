@@ -1,0 +1,86 @@
+<!--Navigation-->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+
+      <div class="row brand-row">
+        <a class="arca-brand page-scroll" href="<%= root_url %>">ARCA<sup style="font-size: 42%;vertical-align: super">&reg</sup></a>
+        <div class="navbar-description">arte colonial </div>
+        <div class="search-bar">
+          <%= bootstrap_form_tag url: artworks_path, :method => 'get', layout: :inline do |f| %>
+            <%= f.text_field :search, hide_label: true, prepend:'<i class="fa fa-search"></i>'.html_safe, placeholder: 'Buscar en la colección...' %>
+          <% end %>
+        </div>
+      </div>
+
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header page-scroll">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="hidden">
+          <a href="#page-top"></a>
+        </li>
+        <li>
+          <a class="page-scroll" href="#services" style="font-weight: bolder; font-family: Gotham-Light;">Archivos</a>
+        </li>
+        <li>
+          <a class="page-scroll" href="#tools" style="font-weight: bolder; font-family: Gotham-Light;">Herramientas</a>
+        </li>
+        <li>
+          <a class="page-scroll" href="#about" style="font-weight: bolder; font-family: Gotham-Light;">Acerca de la base de datos</a>
+        </li>
+        <li>
+          <a class="page-scroll" href="#bibliography" style="font-weight: bolder; font-family: Gotham-Light;">Bibliografía general</a>
+        </li>
+        <li>
+          <a class="page-scroll" href="#team" style="font-weight: bolder; font-family: Gotham-Light;">Legal</a>
+        </li>
+        <li>
+          <a class="page-scroll" href="#contact" style="font-weight: bolder; font-family: Gotham-Light;">Contacto</a>
+        </li>
+        <li>
+          <a class="page-scroll" href="#citation" style="font-weight: bolder; font-family: Gotham-Light;">Citación</a>
+        </li>
+        <!--
+        <li>
+          <a type="href" data-toggle="modal" data-target="#modlogin" href="#" style="font-weight: bolder; font-family: Gotham-Light;">Login</a>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="visible-xs visible-sm">
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modlogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Login</h4>
+      </div>
+      <div class="modal-body">
+        <%= render 'logeo_registro' %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

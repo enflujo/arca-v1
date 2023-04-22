@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:12
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${BD_USUARIO}
+      POSTGRES_PASSWORD: ${BD_CLAVE}
+      POSTGRES_DB: arca
+    volumes:
+      - ./postgres_datos:/var/lib/postgresql/data
+      - ./_backup_datos:/docker-entrypoint-initdb.d
+  web:
+    image: arcav1-ruby:latest
+    restart: unless-stopped
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 8080 -b '0.0.0.0'"
+    volumes:
+      - .:/arca
+    ports:
+      - '8080:8080'
+    depends_on:
+      - db
+    environment:
+      - BD_USUARIO=${BD_USUARIO}
+      - BD_CLAVE=${BD_CLAVE}
+
+volumes:
+  red-arca-v1:

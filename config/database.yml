@@ -1,0 +1,18 @@
+default: &default
+  reconnect: true
+  host: db
+  adapter: postgresql
+  encoding: unicode
+  username: <%= ENV["BD_USUARIO"] %>
+  password: "<%= ENV["BD_CLAVE"] %>"
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: arca
+
+test:
+  <<: *default
+
+production:
+  <<: *default

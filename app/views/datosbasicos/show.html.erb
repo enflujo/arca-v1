@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+<br>
+<p>
+  <strong>Título:</strong>
+  <%= @datosbasico.titulo %>
+</p>
+
+<p>
+  <strong>Sección:</strong>
+  <%= @datosbasico.seccion %>
+</p>
+
+<p>
+  <strong>Descripción:</strong>
+  <%= @datosbasico.descripcion %>
+</p>
+
+<%= link_to 'Edit', edit_datosbasico_path(@datosbasico) %> |
+<%= link_to 'Back', datosbasicos_path %>

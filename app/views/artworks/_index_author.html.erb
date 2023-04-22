@@ -1,0 +1,159 @@
+<%- model_class = Artwork -%>
+
+<div id="author">
+  <div class="page-header row">
+    <div class="col-md-3"></div>
+    <div class="col-md-9">
+      <h1 class="uppercase">
+        Obras por autor
+      </h1>
+    </div>
+  </div>
+  <div class="container">
+    <!-- Seccion de filtros-->
+    <div class="col-md-3">
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <div class="panel panel-default" style="margin-top: 0px">
+          <div class="panel-heading" role="tab" id="headingTemas">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseTemas" aria-expanded="false" aria-controls="collapseTemas">
+                <%= link_to  '&#8226 Temas'.html_safe, artworks_path+"?topic=true" %>
+              </a>
+            </h4>
+          </div>
+        </div>
+
+        <div class="panel panel-default" style="margin-top: 0px">
+          <div class="panel-heading" role="tab" id="headingAutores">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseAutores" aria-expanded="true" aria-controls="collapseAutores">
+                <%= link_to  '&#8226 Autores'.html_safe, artworks_path+"?authors=true" %>
+              </a>
+            </h4>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12" >
+            <div class="row" style="padding: 5px">
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "A" ,artworks_path(:params => params.merge(:authors_filter => "A")) %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "B" ,artworks_path(:params => params.merge(:authors_filter => "B"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "C" ,artworks_path(:params => params.merge(:authors_filter => "C"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "D" ,artworks_path(:params => params.merge(:authors_filter => "D"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "E" ,artworks_path(:params => params.merge(:authors_filter => "E"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "F" ,artworks_path(:params => params.merge(:authors_filter => "F"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "G" ,artworks_path(:params => params.merge(:authors_filter => "G"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "H" ,artworks_path(:params => params.merge(:authors_filter => "H"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "I" ,artworks_path(:params => params.merge(:authors_filter => "I"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "J" ,artworks_path(:params => params.merge(:authors_filter => "J"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "K" ,artworks_path(:params => params.merge(:authors_filter => "K"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "L" ,artworks_path(:params => params.merge(:authors_filter => "L"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "M" ,artworks_path(:params => params.merge(:authors_filter => "M"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "N" ,artworks_path(:params => params.merge(:authors_filter => "N"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "Ñ" ,artworks_path(:params => params.merge(:authors_filter => "Ñ"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "O" ,artworks_path(:params => params.merge(:authors_filter => "O"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "P" ,artworks_path(:params => params.merge(:authors_filter => "P"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "Q" ,artworks_path(:params => params.merge(:authors_filter => "Q"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "R" ,artworks_path(:params => params.merge(:authors_filter => "R"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "S" ,artworks_path(:params => params.merge(:authors_filter => "S"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "T" ,artworks_path(:params => params.merge(:authors_filter => "T"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "U" ,artworks_path(:params => params.merge(:authors_filter => "U"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "V" ,artworks_path(:params => params.merge(:authors_filter => "V"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "W" ,artworks_path(:params => params.merge(:authors_filter => "W"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "X" ,artworks_path(:params => params.merge(:authors_filter => "X"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "Y" ,artworks_path(:params => params.merge(:authors_filter => "Y"))  %></div>
+              <div class="col-xs-1 col-sm-1 col-md-1"><%= link_to  "Z" ,artworks_path(:params => params.merge(:authors_filter => "Z"))  %></div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="panel panel-default" style="margin-top: 0px">
+          <div class="panel-heading" role="tab" id="headingThree">
+            <h4 class="panel-title">
+              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <%= link_to '&#8226 Regiones'.html_safe, artworks_path+"?region=true" %>
+              </a>
+            </h4>
+          </div>
+        </div>
+
+        <div class="panel panel-default" style="margin-top: 0px">
+          <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+              <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <%= link_to  '&#8226 Obras'.html_safe, artworks_path+"?authors=true" %>
+              </a>
+            </h4>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="container-fluid">
+        <div class="row">
+
+          <% i = 0 %>
+          <% @authors.each  do |author| %>
+              <% if i == 0 then %>
+                  <div class="row">
+              <% end %>
+              <div class="col-sm-3  portfolio-item">
+                <div class="row" style="padding: 0px 2px">
+                  <div class="">
+
+                    <div class="thumbnail artwork-thumbnail" style="height: 230px">
+                        <% if author.avatar.exists?%>
+                            <div id="img-wrap" style="background-image: url('<%= author.avatar.url(:medium) %>');"></div>
+                        <% else %>
+                            <%= image_tag author.avatar.url(:thumb) , :width => 150, :height => 150 %>
+                        <% end %>
+                      <div class="caption">
+                        <span class="ellipsis"><a href="<%= artworks_path(:author_show => author.id) %>"> <%= author.get_full_name %> </a></span>
+                        <span class="ellipsis"><a class="link-unstyled" href="<%= artworks_path(:author_show => author.id) %>">
+                                <span class="ellipsis">
+                                    <% obj_nombres = link_authors_artworks(author.artworks)%>
+                                    <% if not obj_nombres.nil? %>
+
+                                        <% inombres = 3 %>
+                                        <% j = 1 %>
+                                        <% obj_nombres.each  do |nombre| %>
+                                            <%= nombre %>
+                                            <br>
+
+                                            <% j = j + 1 %>
+                                        <% end %>
+                                        <%='ver mas'%>
+                                    <% end %>
+                                </span>
+                            </a>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <% i += 1 %>
+              <% if i == 4 then %>
+                  <% i = 0 %>
+                  </div>
+              <% end %>
+
+          <% end %>
+        </div>
+
+        <div class="text-center">
+
+          <%= will_paginate @authors,  renderer: BootstrapPagination::Rails %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<% content_for :css_application do %>
+    <%= stylesheet_link_tag "artworks" %>
+<% end %>

@@ -1,0 +1,23 @@
+<% content_for :css_application do %>
+    <%= stylesheet_link_tag "artworks.css" %>
+<% end %>
+
+<% if params[:authors] == ('true') %>
+    <%= render 'index_author' %>
+<% elsif not params[:region].nil? %>
+    <%= render 'index_region' %>
+<% elsif params[:topic] == ('true') %>
+    <%= render 'index_topic' %>
+<% elsif params[:time_line] == ('show') %>
+    <%= render 'timeline' %>
+<% elsif params[:time_line] == ('true') %>
+    <%= render 'index_topic_timeline' %>
+<% elsif not params[:topic].nil? %>
+    <%= render 'index_all_show' %>
+<% elsif not params[:author_show].nil?%>
+    <%= render 'index_all_show' %>
+<% elsif not params[:region_show].nil?%>
+    <%= render 'index_all_show' %>
+<% else %>
+    <%= render 'index_all_show' %>
+<% end %>
